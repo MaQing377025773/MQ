@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+    <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js"></script>
+</head>
+<body>
+<h2 class="pb-2 border-bottom">日程创建</h2>
+<form th:action="@{/create_agen}" method="post">
+<div class="row">
+    <div class="col-sm-6" style="float: left">
+        <label class="form-label">标题</label>
+        <input type="text" name="agen_title" class="form-control" placeholder="输入你的标题">
+    </div>
+    <!--开始时间-->
+    <div class='col-sm-5' style="float: left">
+        <div class="form-group">
+            <label>选择时间：</label>
+            <!--指定 date标记-->
+            <div class='input-group date left' id='datetime1'>
+                <input name="agen_date" type='text' class="form-control" />
+                <span class="input-group-addon">
+                <!--引入图标-->
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar3" viewBox="0 0 16 16">
+                <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+                <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                </svg>
+                    <span class="bi bi-calendar3"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <input th:value="${session.loginuser.username}"name="username" type="text" style="visibility: hidden;">
+</div>
+<div class="row">
+    <div class="col-sm-8">
+        <br>
+        <div id="TextController">
+            <span>
+            <h1>🤡：欢迎来到 M&Q👌🤯</h1>
+                <p>👽 ：就在这个框里输入👈🏻 🦸🏻‍ ️🦹🏻‍ ️</p>
+            </span>
+        </div>
+        <button type="submit" class="btn btn-success" style="float:right;width: 100px">发表</button>
+    </div>
+
+</div>
+</form>
+
+
+<!--时间-->
+
+<script type="text/javascript">
+    const E = window.wangEditor
+    const editor = new E('#TextController')
+    // 或者 const editor = new E( document.getElementById('div1') )
+    const SINA_URL_PATH = 'http://img.t.sinajs.cn/t4/appstyle/expression/ext/normal'
+    editor.config.menus = [
+        'emoticon',
+        'undo',
+        'redo',
+    ]
+    editor.config.emotions = [
+        {
+            title: 'M&Q抽象派', // tab 的标题
+            type: 'emoji', // 'emoji' 或 'image' ，即 emoji 形式或者图片形式
+            content: '🤡　 🌞  🌝  🌛  🌜  🌚  🌕  🌖  🌗  🌘  🌑  🌒  🌓  🌔  🌙  🌎  🌍  🌏  🪐  💫  ⭐️  🌟  ✨  ⚡️  ☄️  💥  🔥  🌪  🌈  ☀️  🌤  ⛅️  🌥  ☁️  🌦  🌧  ⛈  🌩  🌨  ❄️  ☃️  ⛄️  🌬  💨  💧  💦  ☔️  ☂️  🌊   🌫 '.split(/\s/),
+
+        },
+        {
+            title: '小黄脸',  // tab 的标题
+            type: 'emoji', // 'emoji' / 'image'
+            // emoji 表情，content 是一个数组即可
+            content: '🥴 🥴 🥺 🤢 🤮 🖕 😆 😅 😂 🤣 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠 😈 👿 🤡 👺 👹 💩 👻 💀 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾 '.split(/\s/),
+        },{
+            title:'人物',
+            type:'yeye',
+            content:'👶 👧 🧒 👦 👩 🧑 👨 👩 ‍🧑 ‍👨 👩🏻‍ 🧑🏻‍🦰 👨🏻‍🦰 👱🏻‍♀️ 👱🏻 👱🏻‍♂️ 👩🏻‍🦳 🧑🏻‍🦳 👨‍🦳 👩🏻‍🦲 🧑🏻‍🦲 👨🏻‍🦲 🧔🏻 👵🏻 🧓🏻 👴🏻 👲🏻 👳🏻‍♀️ 👳🏻 👳🏻‍♂️ 👮🏻‍♀️ 👷🏻‍♀️ 🕵🏻‍♀️ 👨🏻‍🎓 👩🏻‍⚖️ 🧑🏻‍⚖️ 🦸🏼‍♀️ 🦸🏻 🦸🏻‍♂️ 🦹🏻‍♀️ 🦹🏻 🦹🏻‍♂️ 🎅🏻 🤶🏻 🧙🏻‍♀️ 🧙🏻 🧟‍ 🧟 🧟‍♂️ 🧞‍ 🧞 🧞‍♂️ 🧜🏻‍ 🧜🏻 🧜🏻‍♂️ 🧚🏻‍♀️ 🧚🏻 '.split(/\s/),
+        },{
+            title:"旗帜",
+            type: 'flag',
+            content: '🇨🇳 🇺🇳 🇦🇱 🇩🇿 🇦🇫 🇦🇷 🇦🇪 🇦🇼 🇴🇲 🇦🇿 🇪🇬 🇪🇹 🇮🇪 🇪🇪 🇦🇩 🇦🇴 🇦🇮 🇦🇬 🇦🇹 🇦🇽 🇦🇺 🇲🇴 🇧🇧 🇵🇬 🇧🇸 🇵🇰 🇵🇾 🇵🇸 🇧🇭 🇵🇦 🇧🇷 🇧🇾 🇧🇲 🇧🇬 🇲🇵 🇮🇸 🇵🇷 🏳️ 🏴 🏴 ‍☠ ️🏁 🚩 🏳 ️‍🌈'.split(/\s/),
+        }
+    ]
+
+    editor.create()
+</script>
+<script type="text/javascript">
+    $("#file").fileinput({
+        'allowedFileExtensions' : ['jpg', 'png','gif'],
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="../js/sidebars.js"></script>
+</body>
+</html>

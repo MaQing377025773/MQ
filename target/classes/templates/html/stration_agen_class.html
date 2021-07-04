@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/bootstrap-table.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container-fluid">
+<h2 class="pb-2 border-bottom">日程管理</h2>
+<span id="spanFirstt"></span>
+<span id="spanPret" ></span>
+<span id="spanNextt"></span>
+<span id="spanLastt"></span>
+第<span id="spanPageNumt"></span>页/共<span id="spanTotalPaget"></span>页
+<table class="table mdi-file-table-outlinedark table-hover">
+    <tr>
+        <th colspan="5" style="margin:0 auto">日程类表</th>
+    </tr>
+    <thead>
+    <tr>
+        <td>标题</td>
+        <td>时间</td>
+        <td>内容</td>
+    </tr>
+    </thead>
+    <tbody id="tablelsw">
+    <tr th:each="agen:${session.agenss}">
+        <td th:id="${agen.agen_title}"></td>
+        <td th:text="${agen.agen_date}"></td>
+        <td th:text="${agen.agen_body}"> </td>
+    </tr>
+    </tbody>
+</table>
+<span  id="spanFirst">第一页</span>
+<span id="spanPre">上一页</span>
+<span id="spanNext">下一页</span>
+<span id="spanLast">最后一页</span>
+第<span id="spanPageNum"></span>页/共<span id="spanTotalPage"></span>页
+</div>
+<script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap-table.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+</body>
+</html>
+<script>
+    var theTable = document.getElementById("tablelsw");
+    var totalPage = document.getElementById("spanTotalPage");
+    var pageNum = document.getElementById("spanPageNum");
+
+    var spanPre = document.getElementById("spanPre");
+    var spanNext = document.getElementById("spanNext");
+    var spanFirst = document.getElementById("spanFirst");
+    var spanLast = document.getElementById("spanLast");
+
+    var totalPaget = document.getElementById("spanTotalPaget");
+    var pageNumt = document.getElementById("spanPageNumt");
+
+    // var spanPret = document.getElementById("spanPret");
+    // var spanNextt = document.getElementById("spanNextt");
+    // var spanFirstt = document.getElementById("spanFirstt");
+    // var spanLastt = document.getElementById("spanLastt");
+
+    var numberRowsInTable = theTable.rows.length;
+    var pageSize = 9;
+    var page = 1;
+
+    //下一页
+    function next(){
+
+        hideTable();
+
+        currentRow = pageSize * page;
+        maxRow = currentRow + pageSize;
+        if ( maxRow > numberRowsInTable ) maxRow = numberRowsInTable;
+        for ( var i = currentRow; i< maxRow; i++ ){
+            theTable.rows[i].style.display = '';
+        }
+        page++;
+
+        if ( maxRow == numberRowsInTable ) { nextText(); lastText(); }
+        showPage();
+        preLink();
+        firstLink();
+    }
+
+    //上一页
+    function pre(){
+
+        hideTable();
+
+        page--;
+
+        currentRow = pageSize * page;
+        maxRow = currentRow - pageSize;
+        if ( currentRow > numberRowsInTable ) currentRow = numberRowsInTable;
+        for ( var i = maxRow; i< currentRow; i++ ){
+            theTable.rows[i].style.display = '';
+        }
+
+
+        if ( maxRow == 0 ){ preText(); firstText(); }
+        showPage();
+        nextLink();
+        lastLink();
+    }
+
+    //第一页
+    function first(){
+        hideTable();
+        page = 1;
+        for ( var i = 0; i<pageSize; i++ ){
+            theTable.rows[i].style.display = '';
+        }
+        showPage();
+
+        preText();
+        nextLink();
+        lastLink();
+    }
+
+    //最后一页
+    function last(){
+        hideTable();
+        page = pageCount();
+        currentRow = pageSize * (page - 1);
+        for ( var i = currentRow; i<numberRowsInTable; i++ ){
+            theTable.rows[i].style.display = '';
+        }
+        showPage();
+
+        preLink();
+        nextText();
+        firstLink();
+    }
+
+    function hideTable(){
+        for ( var i = 0; i<numberRowsInTable; i++ ){
+            theTable.rows[i].style.display = 'none';
+        }
+    }
+
+    function showPage(){
+        pageNum.innerHTML = page;
+        pageNumt.innerHTML = page;
+    }
+
+    //总共页数
+    function pageCount(){
+        var count = 0;
+        if ( numberRowsInTable%pageSize != 0 ) count = 1;
+        return parseInt(numberRowsInTable/pageSize) + count;
+    }
+
+    //显示链接
+    function preLink(){ spanPre.innerHTML = "<a href='javascript:pre();' class='btn btn-outline-dark'>上一页</a>"; }
+    function preText(){ spanPre.innerHTML = "上一页"; }
+
+    function nextLink(){ spanNext.innerHTML = "<a href='javascript:next();'class='btn btn-outline-dark'>下一页</a>"; }
+
+    function nextText(){ spanNext.innerHTML = "下一页";}
+
+
+    function firstLink(){ spanFirst.innerHTML = "<a href='javascript:first();'class='btn btn-outline-dark'>第一页</a>"; }
+
+    function firstText(){ spanFirst.innerHTML = "第一页"; }
+
+
+    function lastLink(){ spanLast.innerHTML = "<a href='javascript:last();'class='btn btn-outline-dark'>最后一页</a>"; }
+
+    function lastText(){ spanLast.innerHTML = "最后一页";}
+
+    //隐藏表格
+    function hide(){
+        for ( var i = pageSize; i<numberRowsInTable; i++ ){
+            theTable.rows[i].style.display = 'none';
+        }
+
+        totalPage.innerHTML = pageCount();
+        pageNum.innerHTML = '1';
+
+        totalPaget.innerHTML = pageCount();
+        pageNumt.innerHTML = '1';
+
+        nextLink();
+        lastLink();
+    }
+
+    hide();
+</script>

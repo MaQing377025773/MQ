@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mq.agenda.user.mapper.UserMapper">
+    <update id="updatepw">
+        update user set password=#{password}
+    </update>
+    <update id="modifyUser">
+        update user set username=#{username},password=#{password};
+    </update>
+    <!--验证用户账号和密码-->
+    <select id="getInfo" parameterType="String" resultType="com.mq.agenda.user.bean.User">
+        select * from user where useremail=#{useremail} and password=#{password}
+    </select>
+    <select id="selectAlluser" resultType="com.mq.agenda.user.bean.User">
+        select * from user
+    </select>
+    <insert id="add">
+        insert into user values (null,#{useremail},#{username},#{password},null)
+    </insert>
+</mapper>

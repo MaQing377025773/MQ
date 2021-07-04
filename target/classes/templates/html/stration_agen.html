@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
+</head>
+<body>
+<div class="container-fluid">
+<h1></h1>
+    <div class="container-fluid">
+        <h2 class="pb-2 border-bottom" style=" color: #6A61E6">日程类管理</h2>
+        <table class="table mdi-file-table-outlinedark table-hover">
+            <tr>
+                <th colspan="5" style="margin:0 auto;">日程类表</th>
+            </tr>
+            <thead>
+            <tr>
+                <td>标题</td>
+                <td>分类</td>
+                <td>创建时间</td>
+                <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="agenday:${table}">
+                <td th:text="${agenday.agen_title}"></td>
+                <td th:text="${agenday.agen_date}"></td>
+                <td th:text="${agenday.agen_body}"> </td>
+                <td>
+                    <a class="btn btn-outline-primary" th:href="@{'/xiugai/'+${agenda.id}}">更改</a>
+                    <a class="btn btn-outline-danger" th:href="@{'/delete/'+${agenda.id}}">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" src="../js/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap-table.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-table@1.18.3/dist/locale/bootstrap-table-zh-CN.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+</body>
+</html>

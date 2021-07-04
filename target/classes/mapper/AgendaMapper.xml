@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mq.agenda.user.mapper.AgendaMapper">
+<!--    插入一个日程-->
+    <insert id="addAgen">
+            insert into agen values (null,#{username},#{agen_title},#{agen_body},#{agen_date})
+    </insert>
+    <update id="upagen">
+        update agen set agen_title=#{agen_title},agen_body=#{agen_body},agen_date=#{agen_date} where id=#{id};
+    </update>
+    <!--    根据id删除-->
+    <delete id="deleteId" parameterType="int">
+        delete from agen where id=#{id}
+    </delete>
+    <!--    查询所有日程-->
+    <select id="AllAgendaList" resultType="com.mq.agenda.user.bean.Agenda">
+        select * from agen;
+    </select>
+    <select id="selectById" resultType="java.lang.Integer">
+        use agenda;
+        select *
+        from agen where id;
+    </select>
+    <select id="fiId" resultType="java.lang.Integer" >
+        use agenda;
+        select * from agen where id;
+    </select>
+    <select id="selectAgen" resultType="com.mq.agenda.user.bean.Agenda">
+        use agenda;
+        select username from agen;
+    </select>
+    <select id="findAgenById" resultType="com.mq.agenda.user.bean.Agenda">
+        use agenda;
+        select * from agen where id=#{id};
+    </select>
+    <select id="selectdate" resultType="com.mq.agenda.user.bean.Agenda">
+        SELECT * from agen WHERE DATE_FORMAT(agen_date,'%D') =DATE_FORMAT(CURDATE(), '%D');
+    </select>
+<!--    <select id="selectBydate" resultType="com.mq.agenda.user.bean.Agenda">-->
+<!--        select * from agen where agen_date;-->
+<!--    </select>-->
+    <select id="selectmon" resultType="com.mq.agenda.user.bean.Agenda">
+        SELECT * from agen WHERE DATE_FORMAT(agen_date,'%M') =DATE_FORMAT(CURDATE(), '%M');
+    </select>
+    <select id="selectyear" resultType="com.mq.agenda.user.bean.Agenda">
+        SELECT * from agen WHERE DATE_FORMAT(agen_date,'%Y') =DATE_FORMAT(CURDATE(), '%Y');
+    </select>
+    <select id="seid" resultType="java.lang.Integer">
+        select id from agen;
+    </select>
+</mapper>
